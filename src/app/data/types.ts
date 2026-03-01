@@ -32,6 +32,11 @@ export interface Candidate {
   resumeUrl?: string;
   createdAt: string;
   updatedAt: string;
+
+  // New Metrics
+  communicationScore?: number; // 0-100
+  roleFitScore?: number; // 0-100
+  redFlags?: string[]; // Array of identified risks/red flags
 }
 
 export interface Education {

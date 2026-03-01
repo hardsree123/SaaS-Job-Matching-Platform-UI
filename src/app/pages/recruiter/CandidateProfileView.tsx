@@ -16,10 +16,11 @@ import {
   UserPlus,
   UserX,
   Award,
-  Briefcase,
   GraduationCap,
   Star,
   ArrowLeft,
+  AlertTriangle,
+  Briefcase,
 } from 'lucide-react';
 import { useCandidate } from '../../api/hooks';
 import { toast } from 'sonner';
@@ -317,6 +318,30 @@ export default function CandidateProfileView() {
                   </div>
                 </div>
 
+                {candidate.roleFitScore && (
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-gray-600">Role Fit</span>
+                      <span className="text-sm font-semibold text-gray-900">{candidate.roleFitScore}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: `${candidate.roleFitScore}%` }} />
+                    </div>
+                  </div>
+                )}
+
+                {candidate.communicationScore && (
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-gray-600">Communication Skills</span>
+                      <span className="text-sm font-semibold text-gray-900">{candidate.communicationScore}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-purple-600 h-2 rounded-full" style={{ width: `${candidate.communicationScore}%` }} />
+                    </div>
+                  </div>
+                )}
+
                 <Separator />
 
                 <div className="space-y-2">
@@ -328,6 +353,22 @@ export default function CandidateProfileView() {
                     <li>✓ Located in {candidate.location}</li>
                   </ul>
                 </div>
+
+                {candidate.redFlags && candidate.redFlags.length > 0 && (
+                  <>
+                    <Separator />
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-red-600 flex items-center gap-1">
+                        <AlertTriangle className="w-4 h-4" /> Attention Needed
+                      </p>
+                      <ul className="text-sm text-gray-700 space-y-2">
+                        {candidate.redFlags.map((flag, idx) => (
+                          <li key={idx} className="bg-red-50 text-red-700 p-2 rounded-md">• {flag}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                )}
               </div>
             </CardContent>
           </Card>

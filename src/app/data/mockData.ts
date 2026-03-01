@@ -54,6 +54,9 @@ export const mockCandidates: Candidate[] = [
     isOpenToOpportunities: true,
     createdAt: '2026-01-15T10:00:00Z',
     updatedAt: '2026-02-20T14:30:00Z',
+    communicationScore: 85,
+    roleFitScore: 92,
+    redFlags: [],
   },
   {
     id: '2',
@@ -115,6 +118,9 @@ export const mockCandidates: Candidate[] = [
     isOpenToOpportunities: true,
     createdAt: '2026-01-10T09:00:00Z',
     updatedAt: '2026-02-25T11:20:00Z',
+    communicationScore: 95,
+    roleFitScore: 96,
+    redFlags: [],
   },
   {
     id: '3',
@@ -168,6 +174,9 @@ export const mockCandidates: Candidate[] = [
     isOpenToOpportunities: true,
     createdAt: '2026-01-20T13:00:00Z',
     updatedAt: '2026-02-28T09:15:00Z',
+    communicationScore: 78,
+    roleFitScore: 88,
+    redFlags: ['Short tenure at previous company'],
   },
   {
     id: '4',
@@ -220,6 +229,9 @@ export const mockCandidates: Candidate[] = [
     isOpenToOpportunities: true,
     createdAt: '2026-01-12T11:00:00Z',
     updatedAt: '2026-02-27T16:45:00Z',
+    communicationScore: 92,
+    roleFitScore: 90,
+    redFlags: [],
   },
 ];
 
