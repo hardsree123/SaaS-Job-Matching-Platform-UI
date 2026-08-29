@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import { SEOHead } from '../components/seo/SEOHead';
 import {
   ArrowRight,
   Upload,
@@ -30,19 +31,30 @@ export default function LandingPage() {
     },
     {
       icon: MessageSquare,
-      title: 'Recruiters contact candidates',
-      description: 'Connect directly with hiring managers and receive interview invitations',
+      title: 'Direct messaging',
+      description: 'Connect directly with employers and recruiters without intermediaries',
+    },
+  ];
+
+  const steps = [
+    {
+      number: '1',
+      title: 'Upload your CV',
+      description: 'Our AI extracts your skills and experience automatically',
+    },
+    {
+      number: '2',
+      title: 'Get matched',
+      description: 'Receive personalized job recommendations based on your profile',
+    },
+    {
+      number: '3',
+      title: 'Connect & Apply',
+      description: 'Apply with one click and communicate directly with recruiters',
     },
   ];
 
   const testimonials = [
-    {
-      name: 'Ahmed Al Mazrouei',
-      role: 'Software Engineer',
-      company: 'Dubai Tech',
-      content: 'I received 5 interview invitations within the first week. The platform made job searching incredibly efficient!',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmed1',
-    },
     {
       name: 'Sara Johnson',
       role: 'Product Manager',
@@ -61,16 +73,16 @@ export default function LandingPage() {
 
   const faqs = [
     {
-      question: 'Does TalentMatch guarantee job offers?',
-      answer: 'No, TalentMatch is a platform that facilitates connections between candidates and recruiters. While we help you get discovered and connect with opportunities, job offers are at the discretion of hiring companies.',
+      question: 'Does DibsMatch guarantee job offers?',
+      answer: 'No, DibsMatch is a platform that facilitates direct connections between candidates and recruiters. While we help you claim your next role and get discovered with smart AI matching, job offers are at the discretion of hiring companies.',
     },
     {
       question: 'How does the matching work?',
-      answer: 'Our smart algorithm analyzes your profile, skills, experience, and preferences to match you with relevant job opportunities and interested recruiters.',
+      answer: 'Our smart algorithm analyzes your profile, skills, experience, and preferences to match you with relevant job opportunities and interested recruiters in real time.',
     },
     {
       question: 'Is the platform free for candidates?',
-      answer: 'Yes! Creating a profile and getting matched with opportunities is completely free for candidates.',
+      answer: 'Yes! Creating a profile, claiming your next role, and getting matched with opportunities is completely free for candidates.',
     },
     {
       question: 'How quickly can I expect to hear from recruiters?',
@@ -80,13 +92,23 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEOHead
+        title="DibsMatch | Claim your next role — AI Job Matching & Sourcing Portal"
+        description="Claim your next role with DibsMatch. Connect with top companies hiring now. AI-powered CV parsing, instant match percentages, and direct recruiter conversations."
+        canonicalUrl="https://dibsmatch.io/demo/client-portal"
+      />
       {/* Sticky Navigation */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg" />
-              <span className="text-xl font-semibold text-gray-900">TalentMatch</span>
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-indigo-600 to-teal-400 rounded-lg flex items-center justify-center text-white font-black text-xs shadow-md">
+                DM
+              </div>
+              <div>
+                <span className="text-xl font-bold tracking-tight text-gray-900 block leading-none">DibsMatch</span>
+                <span className="text-[10px] text-gray-500 font-medium tracking-tight">Claim your next role</span>
+              </div>
             </div>
             <div className="flex items-center gap-4">
               <Button variant="ghost" asChild>
@@ -340,10 +362,10 @@ export default function LandingPage() {
       <section className="py-20 bg-gradient-to-r from-blue-600 to-teal-600">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-            Ready to accelerate your career?
+            Ready to claim your next role?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Join thousands of professionals who found their dream job through TalentMatch
+            Join thousands of professionals who claimed their next role through DibsMatch
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" variant="secondary" className="gap-2" asChild>
@@ -367,12 +389,17 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg" />
-                <span className="text-xl font-semibold text-white">TalentMatch</span>
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 via-indigo-600 to-teal-400 rounded-lg flex items-center justify-center text-white font-black text-xs shadow-md">
+                  DM
+                </div>
+                <div>
+                  <span className="text-xl font-bold text-white block leading-none">DibsMatch</span>
+                  <span className="text-[10px] text-gray-400 font-medium">Claim your next role</span>
+                </div>
               </div>
-              <p className="text-sm">
-                Connecting talent with opportunity through intelligent matching.
+              <p className="text-sm text-gray-400">
+                Claim your next role with intelligent AI job matching and automated recruiter discovery.
               </p>
             </div>
             <div>
@@ -402,7 +429,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="border-t border-gray-800 pt-8 text-center text-sm">
-            <p>&copy; 2026 TalentMatch. All rights reserved.</p>
+            <p>&copy; 2026 DibsMatch. All rights reserved.</p>
           </div>
         </div>
       </footer>

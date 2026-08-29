@@ -10,7 +10,21 @@ import { Button } from './button';
 import { Input } from './input';
 import { Label } from './label';
 import { Badge } from './badge';
-import { Check, Sparkles, Building2, ShieldCheck, Zap, HelpCircle, Layers } from 'lucide-react';
+import {
+  Check,
+  Sparkles,
+  Building2,
+  ShieldCheck,
+  Zap,
+  PhoneCall,
+  Lock,
+  ArrowRight,
+  Clock,
+  Star,
+  CheckCircle2,
+  Cpu,
+  Layers,
+} from 'lucide-react';
 
 export type PlanKey = 'starter' | 'growth' | 'pro' | 'enterprise';
 
@@ -31,6 +45,7 @@ export function LicensePurchaseModal({
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     company: '',
     targetDomain: '',
     notes: '',
@@ -38,73 +53,97 @@ export function LicensePurchaseModal({
 
   const plans: Record<PlanKey, {
     name: string;
+    tagline: string;
     monthlyPrice: number;
     annualPrice: number;
     lifetimePrice: number;
-    description: string;
-    features: string[];
+    workspaces: string;
+    seats: string;
+    aiVolume: string;
+    cvParsing: string;
     isPopular?: boolean;
+    badgeColor?: string;
+    features: string[];
   }> = {
     starter: {
-      name: 'Starter Edition',
+      name: 'Starter',
+      tagline: 'Boutique agencies & single recruitment workspace',
       monthlyPrice: 299,
       annualPrice: 249,
       lifetimePrice: 2990,
-      description: 'Engineered for boutique staffing agencies & emerging recruitment teams launching a dedicated branded portal.',
+      workspaces: '1 Workspace',
+      seats: 'Up to 5 seats',
+      aiVolume: '1,500 AI Matches/mo',
+      cvParsing: '300 CV parses/mo',
       features: [
         '1 Dedicated Branded Workspace',
-        'Up to 5 Team Member Seats with RBAC',
-        'Applicant Tracking (Kanban Pipeline & Scorecards)',
-        'AI Semantic Matching (1,500 candidate matches/mo)',
-        'Automated Resume/CV Parsing (300 uploads/mo)',
+        'Up to 5 Team Member Seats (RBAC)',
+        'Kanban ATS Pipeline & Candidate Scorecards',
+        '1,500 AI Semantic Candidate Matches/mo',
+        'Automated Resume/CV Entity Parsing (300/mo)',
         'Custom Brand Logo, Colors & Typography',
+        'Standard Email Notification Templates',
       ],
     },
     growth: {
-      name: 'Growth Edition',
+      name: 'Growth',
+      tagline: 'Scaling recruitment firms & regional niche boards',
       monthlyPrice: 699,
       annualPrice: 579,
       lifetimePrice: 6990,
-      description: 'Ideal for scaling recruitment firms & niche job boards expanding candidate volume across multiple teams.',
+      workspaces: '3 Workspaces',
+      seats: 'Up to 15 seats',
+      aiVolume: '10,000 AI Matches/mo',
+      cvParsing: '1,500 CV parses/mo',
       features: [
         'Up to 3 Branded Workspaces',
         'Up to 15 Team Member Seats',
-        'Custom Apex Domain Mapping with Automated SSL',
-        'Stripe Connect Employer Paywall & Job Posting Credits',
-        'AI Semantic Matching (10,000 candidate matches/mo)',
-        'Automated Resume/CV Parsing (1,500 uploads/mo)',
-        'Standard Email Notification Templates & Priority Support',
+        'Custom Apex Domain Mapping & Automated SSL',
+        'Stripe Connect Employer Paywall & Posting Credits',
+        '10,000 AI Semantic Candidate Matches/mo',
+        'Automated Resume/CV Entity Parsing (1,500/mo)',
+        'Priority Technical Support & Email Templates',
       ],
     },
     pro: {
-      name: 'Pro Edition',
+      name: 'Pro',
+      tagline: 'High-volume talent marketplaces & multi-brand groups',
       monthlyPrice: 1290,
       annualPrice: 1090,
       lifetimePrice: 12900,
-      description: 'Perfect for high-volume talent marketplaces, regional job networks, and multi-brand staffing groups.',
+      workspaces: '10 Workspaces',
+      seats: 'Unlimited seats',
+      aiVolume: 'Unlimited vector AI',
+      cvParsing: 'Unlimited CV parsing',
       isPopular: true,
+      badgeColor: 'from-blue-600 to-indigo-600',
       features: [
         'Up to 10 Multi-Brand Isolated Workspaces',
         'Unlimited Team Members & Candidate Accounts',
         'High-Throughput Vector AI Matching (Unlimited)',
         'Unlimited Automated Resume Parsing',
-        'Full White-Label & Custom CSS Variables',
+        'Full White-Labeling (Custom CSS & Transactional SMTP)',
         'Multi-Currency (USD, AED, SAR, EUR) & MENA RTL Ready',
-        'Priority 24/7 SLA & Dedicated Customer Success Manager',
+        'Priority 24/7 Dedicated SLA & Dedicated CSM',
       ],
     },
     enterprise: {
-      name: 'Enterprise / Source Code License',
+      name: 'Enterprise',
+      tagline: 'Full source code ownership & self-hosted private cloud',
       monthlyPrice: 2490,
       annualPrice: 1990,
       lifetimePrice: 24900,
-      description: 'Complete uncompiled source code ownership, private cloud self-hosting, and unrestricted custom engineering.',
+      workspaces: 'Unlimited VPC',
+      seats: 'Full Codebase',
+      aiVolume: 'Air-Gapped AI',
+      cvParsing: 'Self-Hosted',
+      badgeColor: 'from-purple-600 to-indigo-600',
       features: [
-        '100% Full Uncompiled Source Code (Frontend & Backend)',
+        '100% Full Uncompiled Source Code (React 18 + Backend)',
         'Unlimited Self-Hosted Workspaces & Private Cloud VPC',
-        'Self-Hosted AI Embedding Models (Data Sovereignty Compliant)',
+        'Self-Hosted AI Embedding Models (Data Sovereignty)',
         'Enterprise Single Sign-On (SAML 2.0 / Okta / Azure AD)',
-        'Direct Engineering Team Slack Channel & Architecture Review',
+        'Direct Engineering Slack Channel & Architecture Review',
         '0% Platform Royalties & Perpetual Commercial Rights',
       ],
     },
@@ -112,14 +151,29 @@ export function LicensePurchaseModal({
 
   const currentPlan = plans[selectedPlan] || plans.pro;
 
-  const getPriceDisplay = () => {
+  const getActivePrice = (tierKey: PlanKey) => {
+    const plan = plans[tierKey];
     if (billingCycle === 'lifetime') {
-      return `$${currentPlan.lifetimePrice.toLocaleString()} one-time`;
+      return {
+        amount: `$${plan.lifetimePrice.toLocaleString()}`,
+        period: 'one-time buyout',
+        savings: 'Perpetual ownership',
+      };
     }
     if (billingCycle === 'annual') {
-      return `$${currentPlan.annualPrice.toLocaleString()} / month (billed annually)`;
+      return {
+        amount: `$${plan.annualPrice.toLocaleString()}`,
+        period: '/ month',
+        subtext: 'Billed annually',
+        savings: `Save $${((plan.monthlyPrice - plan.annualPrice) * 12).toLocaleString()}/yr`,
+      };
     }
-    return `$${currentPlan.monthlyPrice.toLocaleString()} / month`;
+    return {
+      amount: `$${plan.monthlyPrice.toLocaleString()}`,
+      period: '/ month',
+      subtext: 'Billed monthly',
+      savings: null,
+    };
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -134,218 +188,378 @@ export function LicensePurchaseModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleResetAndClose()}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto p-0 border-gray-200">
-        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 text-white p-6 sm:p-8">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold uppercase tracking-wider border border-blue-400/30">
-              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              B2B SaaS Workspace License Agreement
-            </span>
+      <DialogContent className="sm:max-w-5xl lg:max-w-5xl xl:max-w-6xl w-full max-w-[96vw] max-h-[92vh] overflow-y-auto p-0 border-slate-800 bg-slate-950 text-white shadow-2xl rounded-2xl">
+        {/* Top Header Banner */}
+        <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 px-6 sm:px-10 py-6 border-b border-slate-800 relative">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-[11px] font-bold uppercase tracking-wider border border-blue-400/30">
+                  <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
+                  B2B SaaS Workspace Commercial License
+                </span>
+                <span className="hidden sm:inline-flex items-center gap-1 text-xs text-amber-300/90 font-medium bg-amber-400/10 px-2.5 py-0.5 rounded-full border border-amber-400/20">
+                  <Star className="w-3 h-3 fill-amber-300 text-amber-300" />
+                  4.9/5 Rating (120+ Organizations)
+                </span>
+              </div>
+              <DialogTitle className="text-2xl sm:text-3xl font-black tracking-tight text-white">
+                Deploy DibsMatch For Your Organization
+              </DialogTitle>
+              <DialogDescription className="text-slate-400 text-xs sm:text-sm">
+                Claim your next role with DibsMatch. Select your preferred licensing tier and speak directly with our solutions engineering team.
+              </DialogDescription>
+            </div>
+
+            <div className="hidden lg:flex items-center gap-4 text-xs text-slate-400">
+              <div className="flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-emerald-400" />
+                <span>15-Min Response SLA</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-blue-400" />
+                <span>0% Royalty Guarantee</span>
+              </div>
+            </div>
           </div>
-          <DialogTitle className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-            Deploy TalentMatch For Your Organization
-          </DialogTitle>
-          <DialogDescription className="text-slate-300 text-sm mt-2">
-            Select your licensing plan to obtain immediate deployment credentials, white-label customization assets, and turnkey SaaS access.
-          </DialogDescription>
         </div>
 
         {submitted ? (
-          <div className="p-8 text-center space-y-4">
-            <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto ring-8 ring-emerald-50">
-              <Check className="w-8 h-8 stroke-[3]" />
+          /* Submission Feedback Screen */
+          <div className="p-8 sm:p-12 text-center space-y-6 max-w-xl mx-auto">
+            <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto ring-8 ring-emerald-500/10">
+              <Check className="w-10 h-10 stroke-[3]" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900">License Request Received!</h3>
-            <p className="text-gray-600 max-w-md mx-auto text-sm leading-relaxed">
-              Thank you, <span className="font-semibold text-gray-900">{formData.name || 'Partner'}</span>. Our commercial licensing team has provisioned your sandbox workspace token for <span className="font-semibold text-gray-900">{formData.company || 'your organization'}</span>.
-            </p>
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-left max-w-md mx-auto text-xs space-y-2">
-              <div className="flex justify-between text-gray-600">
+            <div className="space-y-2">
+              <h3 className="text-2xl sm:text-3xl font-black text-white">Call Back Request Received!</h3>
+              <p className="text-slate-300 text-sm leading-relaxed">
+                Thank you, <span className="font-bold text-white">{formData.name || 'Partner'}</span>. Our commercial solutions architect is reviewing your organization profile for <span className="font-bold text-white">{formData.company || 'your team'}</span> and will call you back shortly.
+              </p>
+            </div>
+
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 text-left text-xs space-y-3">
+              <div className="flex justify-between items-center text-slate-400">
                 <span>Selected Plan:</span>
-                <span className="font-semibold text-gray-900">{currentPlan.name}</span>
+                <span className="font-bold text-white text-sm">{currentPlan.name} Edition</span>
               </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Billing Term:</span>
-                <span className="font-semibold text-gray-900 capitalize">{billingCycle}</span>
+              <div className="flex justify-between items-center text-slate-400">
+                <span>Billing Structure:</span>
+                <span className="font-semibold text-emerald-400 capitalize">{billingCycle} Term</span>
               </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Target Domain:</span>
-                <span className="font-semibold text-gray-900">{formData.targetDomain || 'Custom Subdomain'}</span>
+              {formData.phone && (
+                <div className="flex justify-between items-center text-slate-400">
+                  <span>Call Back Number:</span>
+                  <span className="font-semibold text-white font-mono">{formData.phone}</span>
+                </div>
+              )}
+              <div className="flex justify-between items-center text-slate-400">
+                <span>Custom Domain:</span>
+                <span className="font-semibold text-blue-400 font-mono">{formData.targetDomain || 'Custom Subdomain'}</span>
               </div>
             </div>
-            <p className="text-xs text-gray-500">
-              We’ve sent the full white-label onboarding kit and staging environment credentials to <span className="font-medium text-gray-800">{formData.email || 'your email'}</span>.
+
+            <p className="text-xs text-slate-400">
+              We have also sent the complete white-label technical architecture brief to <span className="font-medium text-slate-200">{formData.email}</span>.
             </p>
-            <div className="pt-4">
-              <Button onClick={handleResetAndClose} className="w-full sm:w-auto px-8">
-                Done & Return to Explorer
-              </Button>
-            </div>
+
+            <Button onClick={handleResetAndClose} className="w-full sm:w-auto px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30">
+              Return to Platform Explorer
+            </Button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="p-6 sm:p-8 space-y-6">
-            {/* Plan Picker */}
-            <div>
-              <Label className="text-sm font-semibold text-gray-800 mb-2 block">
-                1. Select Licensing Tier
-              </Label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
-                {(['starter', 'growth', 'pro', 'enterprise'] as const).map((tierKey) => {
-                  const plan = plans[tierKey];
-                  const isSelected = selectedPlan === tierKey;
-                  return (
-                    <button
-                      type="button"
-                      key={tierKey}
-                      onClick={() => setSelectedPlan(tierKey)}
-                      className={`relative p-3 rounded-xl border text-left transition-all ${
-                        isSelected
-                          ? 'border-blue-600 bg-blue-50/60 ring-2 ring-blue-600/20'
-                          : 'border-gray-200 hover:border-gray-300 bg-white'
-                      }`}
-                    >
-                      {plan.isPopular && (
-                        <span className="absolute -top-2.5 right-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                          POPULAR
-                        </span>
-                      )}
-                      <div className="font-bold text-xs text-gray-900 mb-1">{plan.name}</div>
-                      <div className="text-[11px] text-gray-500 line-clamp-2 leading-snug">{plan.description}</div>
-                    </button>
-                  );
-                })}
+          /* Main 2-Column Split Interface */
+          <div className="p-6 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left Column: Plan Picker & Dynamic Feature Inclusions (7 Cols) */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Step 1: Billing Structure Switcher */}
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <Label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                    1. Choose Billing Frequency
+                  </Label>
+                  <span className="text-[11px] font-semibold text-emerald-400">
+                    ⚡ Annual plans include 2 months free
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800 text-center text-xs font-semibold">
+                  <button
+                    type="button"
+                    onClick={() => setBillingCycle('annual')}
+                    className={`py-2.5 px-3 rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                      billingCycle === 'annual'
+                        ? 'bg-blue-600 text-white shadow-md font-bold'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    <span>Annual License</span>
+                    <span className="bg-emerald-400 text-slate-950 text-[10px] font-extrabold px-1.5 py-0.2 rounded">
+                      -20%
+                    </span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setBillingCycle('monthly')}
+                    className={`py-2.5 px-3 rounded-lg transition-all ${
+                      billingCycle === 'monthly'
+                        ? 'bg-blue-600 text-white shadow-md font-bold'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    Monthly SaaS
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setBillingCycle('lifetime')}
+                    className={`py-2.5 px-3 rounded-lg transition-all ${
+                      billingCycle === 'lifetime'
+                        ? 'bg-blue-600 text-white shadow-md font-bold'
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    Perpetual Buyout
+                  </button>
+                </div>
+              </div>
+
+              {/* Step 2: 4-Tier Interactive Cards with High-Visibility Pricing */}
+              <div className="space-y-2.5">
+                <Label className="text-xs font-bold uppercase tracking-wider text-slate-300 block">
+                  2. Select Licensing Tier
+                </Label>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  {(['starter', 'growth', 'pro', 'enterprise'] as const).map((tierKey) => {
+                    const plan = plans[tierKey];
+                    const isSelected = selectedPlan === tierKey;
+                    const priceInfo = getActivePrice(tierKey);
+
+                    return (
+                      <button
+                        type="button"
+                        key={tierKey}
+                        onClick={() => setSelectedPlan(tierKey)}
+                        className={`relative p-4 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between ${
+                          isSelected
+                            ? 'border-blue-500 bg-gradient-to-b from-blue-950/70 to-slate-900 shadow-xl shadow-blue-500/10 ring-2 ring-blue-500'
+                            : 'border-slate-800/90 hover:border-slate-700 bg-slate-900/60 hover:bg-slate-900'
+                        }`}
+                      >
+                        {/* Popular Badge */}
+                        {plan.isPopular && (
+                          <span className="absolute -top-2.5 right-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-[9px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-md">
+                            MOST POPULAR
+                          </span>
+                        )}
+
+                        <div>
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <span className="font-extrabold text-white text-base">
+                              {plan.name}
+                            </span>
+                            <Badge className="bg-slate-800 text-slate-300 border-slate-700 text-[10px] px-2">
+                              {plan.workspaces}
+                            </Badge>
+                          </div>
+
+                          <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed mb-3">
+                            {plan.tagline}
+                          </p>
+                        </div>
+
+                        {/* Prominent Pricing Value Display */}
+                        <div className="pt-3 border-t border-slate-800/80">
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                              {priceInfo.amount}
+                            </span>
+                            <span className="text-xs text-slate-400 font-medium">
+                              {priceInfo.period}
+                            </span>
+                          </div>
+
+                          {priceInfo.savings && (
+                            <div className="text-[10px] font-semibold text-emerald-400 mt-0.5">
+                              ✓ {priceInfo.savings}
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Dynamic Feature Inclusions Matrix for Selected Plan */}
+              <div className="bg-slate-900/90 border border-slate-800/90 rounded-2xl p-5 space-y-3">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                  <div className="flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-blue-400" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-200">
+                      Included with {currentPlan.name} Tier:
+                    </span>
+                  </div>
+                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-[11px]">
+                    {currentPlan.workspaces}
+                  </Badge>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-300">
+                  {currentPlan.features.map((feat, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                      <span className="leading-snug">{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Enterprise Security Highlights */}
+              <div className="grid grid-cols-3 gap-3 text-center text-xs text-slate-400 border-t border-slate-800/80 pt-4">
+                <div className="p-2.5 bg-slate-900/50 rounded-xl border border-slate-800/60">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
+                  <span className="text-[11px] font-semibold text-slate-300 block">30-Day Guarantee</span>
+                  <span className="text-[10px] text-slate-500">Risk-free trial</span>
+                </div>
+                <div className="p-2.5 bg-slate-900/50 rounded-xl border border-slate-800/60">
+                  <Lock className="w-4 h-4 text-blue-400 mx-auto mb-1" />
+                  <span className="text-[11px] font-semibold text-slate-300 block">100% White-Label</span>
+                  <span className="text-[10px] text-slate-500">Your brand & apex domain</span>
+                </div>
+                <div className="p-2.5 bg-slate-900/50 rounded-xl border border-slate-800/60">
+                  <Cpu className="w-4 h-4 text-purple-400 mx-auto mb-1" />
+                  <span className="text-[11px] font-semibold text-slate-300 block">0% Placement Cuts</span>
+                  <span className="text-[10px] text-slate-500">Keep 100% platform revenue</span>
+                </div>
               </div>
             </div>
 
-            {/* Billing Cycle Switcher */}
-            <div>
-              <Label className="text-sm font-semibold text-gray-800 mb-2 block">
-                2. Choose Billing Structure
-              </Label>
-              <div className="grid grid-cols-3 gap-2 bg-gray-100 p-1.5 rounded-xl text-center text-xs font-medium">
-                <button
-                  type="button"
-                  onClick={() => setBillingCycle('annual')}
-                  className={`py-2 px-3 rounded-lg transition-all ${
-                    billingCycle === 'annual'
-                      ? 'bg-white text-blue-700 shadow-sm font-bold'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Annual License <span className="text-[10px] text-emerald-600 font-bold ml-1">(Save 20%)</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBillingCycle('monthly')}
-                  className={`py-2 px-3 rounded-lg transition-all ${
-                    billingCycle === 'monthly'
-                      ? 'bg-white text-blue-700 shadow-sm font-bold'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Monthly SaaS
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBillingCycle('lifetime')}
-                  className={`py-2 px-3 rounded-lg transition-all ${
-                    billingCycle === 'lifetime'
-                      ? 'bg-white text-blue-700 shadow-sm font-bold'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Perpetual Buyout
-                </button>
+            {/* Right Column: Callback & Customization Request Form (5 Cols) */}
+            <div className="lg:col-span-5 bg-gradient-to-b from-slate-900 via-slate-900/95 to-slate-950 border-2 border-blue-500/40 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <PhoneCall className="w-4 h-4 text-blue-400" />
+                  <h3 className="font-extrabold text-white text-lg">
+                    Speak With a Solutions Architect
+                  </h3>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Request a live walkthrough, custom pricing proposal, or sandbox credentials.
+                </p>
               </div>
-              <div className="mt-2 text-right">
-                <span className="text-sm font-semibold text-gray-900">{getPriceDisplay()}</span>
-              </div>
-            </div>
 
-            {/* Included in this plan */}
-            <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-4">
-              <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2.5 flex items-center gap-1.5">
-                <Zap className="w-3.5 h-3.5 text-blue-600" />
-                Plan Inclusions ({currentPlan.name}):
+              {/* Selected Plan Summary Banner */}
+              <div className="p-3.5 bg-blue-950/40 border border-blue-500/30 rounded-xl flex items-center justify-between text-xs">
+                <div>
+                  <div className="text-[10px] text-blue-300 font-semibold uppercase tracking-wider">
+                    Selected Configuration
+                  </div>
+                  <div className="font-black text-white text-sm">
+                    {currentPlan.name} Edition ({billingCycle})
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-black text-white text-base">
+                    {getActivePrice(selectedPlan).amount}
+                  </div>
+                  <div className="text-[10px] text-slate-400">
+                    {getActivePrice(selectedPlan).period}
+                  </div>
+                </div>
               </div>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-700">
-                {currentPlan.features.map((feat, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                    <span>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
-            {/* Contact & Organization Details */}
-            <div className="space-y-4">
-              <Label className="text-sm font-semibold text-gray-800 block">
-                3. Your Organization & Contact Details
-              </Label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="name" className="text-xs text-gray-600">Full Name *</Label>
+                  <Label htmlFor="name" className="text-xs font-semibold text-slate-300">
+                    Your Full Name *
+                  </Label>
                   <Input
                     id="name"
                     required
                     placeholder="e.g. Alex Morgan"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-500 text-xs py-2.5 rounded-xl focus:border-blue-500"
                   />
                 </div>
+
                 <div className="space-y-1.5">
-                  <Label htmlFor="email" className="text-xs text-gray-600">Business Email *</Label>
+                  <Label htmlFor="email" className="text-xs font-semibold text-slate-300">
+                    Business Email *
+                  </Label>
                   <Input
                     id="email"
                     type="email"
                     required
-                    placeholder="alex@organization.com"
+                    placeholder="alex@company.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-500 text-xs py-2.5 rounded-xl focus:border-blue-500"
                   />
                 </div>
+
                 <div className="space-y-1.5">
-                  <Label htmlFor="company" className="text-xs text-gray-600">Company / Organization Name *</Label>
+                  <Label htmlFor="phone" className="text-xs font-semibold text-slate-300">
+                    Phone Number / WhatsApp *
+                  </Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    required
+                    placeholder="e.g. +1 (555) 234-5678"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-500 text-xs py-2.5 rounded-xl focus:border-blue-500"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <Label htmlFor="company" className="text-xs font-semibold text-slate-300">
+                    Company / Organization Name *
+                  </Label>
                   <Input
                     id="company"
                     required
                     placeholder="e.g. Apex Talent Group Ltd"
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-500 text-xs py-2.5 rounded-xl focus:border-blue-500"
                   />
                 </div>
+
                 <div className="space-y-1.5">
-                  <Label htmlFor="domain" className="text-xs text-gray-600">Desired Custom Domain</Label>
+                  <Label htmlFor="domain" className="text-xs font-semibold text-slate-300">
+                    Desired Custom Domain (Optional)
+                  </Label>
                   <Input
                     id="domain"
                     placeholder="e.g. jobs.apextalent.com"
                     value={formData.targetDomain}
                     onChange={(e) => setFormData({ ...formData, targetDomain: e.target.value })}
+                    className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-500 text-xs py-2.5 rounded-xl focus:border-blue-500"
                   />
                 </div>
-              </div>
-            </div>
 
-            {/* Guarantees */}
-            <div className="flex items-center gap-3 text-xs text-gray-500 border-t pt-4">
-              <ShieldCheck className="w-5 h-5 text-emerald-600 flex-shrink-0" />
-              <span>30-Day Money-Back Guarantee. Full source code repository access granted via private GitHub organization upon completion.</span>
-            </div>
+                <div className="pt-2">
+                  <Button
+                    type="submit"
+                    className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white font-bold py-6 rounded-xl shadow-xl shadow-blue-600/30 text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+                  >
+                    <PhoneCall className="w-4 h-4" />
+                    <span>Request a call back</span>
+                    <ArrowRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </div>
 
-            {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-end pt-2">
-              <Button type="button" variant="outline" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 shadow-md shadow-blue-600/20"
-              >
-                Request Deployment Credentials
-              </Button>
+                <p className="text-[11px] text-slate-500 text-center leading-tight pt-1">
+                  🔒 No credit card required. Free 1-on-1 architecture consultation & instant sandbox access.
+                </p>
+              </form>
             </div>
-          </form>
+          </div>
         )}
       </DialogContent>
     </Dialog>

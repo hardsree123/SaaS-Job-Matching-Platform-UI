@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
+import { SEOHead } from '../components/seo/SEOHead';
 import {
   Sparkles,
   ArrowRight,
@@ -107,15 +108,23 @@ export default function DemoHubPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-blue-600 selection:text-white">
+      <SEOHead
+        title="Interactive SaaS Demo Hub & Directory | DibsMatch"
+        description="Claim your next role with DibsMatch. Explore the live interactive demo. Test both Candidate Job Portal and Recruiter ATS Pipeline with smart vector AI matching."
+        canonicalUrl="https://dibsmatch.io/demo"
+      />
       {/* Header */}
       <header className="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-lg shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                TM
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-sm shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                DM
               </div>
-              <span className="font-bold text-lg text-white tracking-tight">TalentMatch <span className="text-xs text-blue-400 font-mono font-normal">DEMO PORTAL</span></span>
+              <div>
+                <span className="font-bold text-lg text-white tracking-tight block leading-none">DibsMatch <span className="text-xs text-blue-400 font-mono font-normal">DEMO PORTAL</span></span>
+                <span className="text-[10px] text-slate-400 font-medium">Claim your next role</span>
+              </div>
             </Link>
           </div>
 
@@ -143,10 +152,10 @@ export default function DemoHubPage() {
             Live Turnkey SaaS Sandbox
           </div>
           <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight max-w-3xl mx-auto">
-            Experience the TalentMatch Platform in Action
+            Experience the DibsMatch Platform in Action
           </h1>
           <p className="mt-4 text-slate-400 max-w-2xl mx-auto text-base sm:text-lg">
-            Explore the complete dual-sided marketplace as an active Candidate or a corporate Recruiter. Test our matchmaking engine, Kanban pipeline, and modern responsive UI.
+            Claim your next role. Explore the complete dual-sided marketplace as an active Candidate or a corporate Recruiter. Test our matchmaking engine, Kanban pipeline, and modern responsive UI.
           </p>
 
           {/* Quick Dual Start */}
@@ -284,7 +293,7 @@ export default function DemoHubPage() {
           </div>
         </section>
 
-        {/* Tenant End-User Landing Preview */}
+        {/* Branded Consumer Landing Preview */}
         <section className="bg-gradient-to-r from-blue-900/30 via-indigo-900/20 to-slate-900 border border-slate-800 rounded-3xl p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-8">
           <div className="space-y-3 max-w-xl">
             <Badge className="bg-emerald-500/20 text-emerald-300 border-emerald-500/30">
@@ -294,7 +303,7 @@ export default function DemoHubPage() {
               View the End-User Candidate Marketing Page
             </h3>
             <p className="text-slate-300 text-sm leading-relaxed">
-              Want to see what your job candidates and employers will see when they visit your customized tenant domain? View the default consumer-facing landing page included in this build.
+              Want to see what your job candidates and hiring managers will see when they visit your customized branded domain? View the default consumer-facing landing page included in this build.
             </p>
           </div>
 
@@ -302,12 +311,12 @@ export default function DemoHubPage() {
             <Button asChild size="lg" className="bg-white text-slate-950 hover:bg-slate-100 font-bold">
               <Link to="/demo/client-portal">
                 <ExternalLink className="w-4 h-4 mr-2" />
-                View Tenant Landing Demo
+                View Candidate Portal Landing
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-slate-700 bg-slate-900 hover:bg-slate-800 text-white">
               <Link to="/">
-                License This SaaS Platform
+                Get Organization License
               </Link>
             </Button>
           </div>
@@ -317,7 +326,7 @@ export default function DemoHubPage() {
       {/* Footer */}
       <footer className="border-t border-slate-800 py-8 bg-slate-950 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p>© 2026 TalentMatch SaaS Platform. Turnkey White-Label Licensing Edition.</p>
+          <p>© 2026 DibsMatch SaaS Platform. Turnkey White-Label Licensing Edition.</p>
           <div className="flex items-center gap-6 text-slate-400">
             <Link to="/" className="hover:text-white">Commercial Licensing</Link>
             <Link to="/candidate/dashboard" className="hover:text-white">Candidate App</Link>

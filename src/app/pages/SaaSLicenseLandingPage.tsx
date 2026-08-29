@@ -36,6 +36,7 @@ import {
   X,
 } from 'lucide-react';
 import { LicensePurchaseModal, PlanKey } from '../components/ui/LicensePurchaseModal';
+import { SEOHead } from '../components/seo/SEOHead';
 
 export default function SaaSLicenseLandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -43,8 +44,8 @@ export default function SaaSLicenseLandingPage() {
   const [selectedPlan, setSelectedPlan] = useState<PlanKey>('pro');
 
   // Interactive White-Label Simulator state
-  const [tenantName, setTenantName] = useState('GulfTalent Pro');
-  const [tenantDomain, setTenantDomain] = useState('careers.gulftalent.io');
+  const [brandName, setBrandName] = useState('GulfTalent Pro');
+  const [brandDomain, setBrandDomain] = useState('careers.gulftalent.io');
   const [themeColor, setThemeColor] = useState<'blue' | 'emerald' | 'violet' | 'amber'>('blue');
 
   // ROI Calculator state
@@ -109,9 +110,9 @@ export default function SaaSLicenseLandingPage() {
     },
     {
       icon: Palette,
-      title: 'Multi-Tenant White-Labeling',
+      title: 'White-Label Organization Portals',
       description:
-        'Tenant-level brand isolation: Custom apex domains/subdomains, corporate palettes, logo assets, automated transactional emails, and custom CSS variables.',
+        'Workspace brand isolation: Custom apex domains/subdomains, corporate palettes, logo assets, automated transactional emails, and custom CSS variables.',
       badge: 'Brand Freedom',
     },
     {
@@ -169,12 +170,12 @@ export default function SaaSLicenseLandingPage() {
 
   const faqs = [
     {
-      q: 'What do I receive when I purchase a TalentMatch tenant license?',
-      a: 'Depending on your tier, you receive either an instantly provisioned multi-tenant cloud environment with custom domain mapping, automated SSL, and tenant administration, or the full uncompiled TypeScript/React frontend & backend source code with perpetual commercial rights to self-host anywhere.',
+      q: 'What do I receive when I purchase a DibsMatch organization license?',
+      a: 'Depending on your plan, you receive either an instantly provisioned multi-workspace cloud environment with custom domain mapping, automated SSL, and organization administration, or the full uncompiled TypeScript/React frontend & backend source code with perpetual commercial rights to self-host anywhere.',
     },
     {
       q: 'Can I rebrand the application with my agency or company logo and colors?',
-      a: 'Yes! TalentMatch is built with 100% white-label architecture. You can customize the platform name, logo, typography, color palette, custom domain (e.g. jobs.yourcompany.com), transactional email templates, and employer checkout branding.',
+      a: 'Yes! DibsMatch is built with 100% white-label architecture. You can customize the platform name, logo, typography, color palette, custom domain (e.g. jobs.yourcompany.com), transactional email templates, and employer checkout branding.',
     },
     {
       q: 'Can I host this on my own AWS, Azure, GCP, or private VPC infrastructure?',
@@ -190,19 +191,25 @@ export default function SaaSLicenseLandingPage() {
     },
     {
       q: 'How is data privacy and compliance handled for different regions (e.g. GCC / EU)?',
-      a: 'The platform is architected with strict tenant data isolation, encrypted candidate PII storage, consent tracking, and localized compliance support for GDPR, UAE Personal Data Protection Law (PDPL), and Saudi Arabian PDPL.',
+      a: 'The platform is architected with strict organization data isolation, encrypted candidate PII storage, consent tracking, and localized compliance support for GDPR, UAE Personal Data Protection Law (PDPL), and Saudi Arabian PDPL.',
     },
   ];
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-blue-600 selection:text-white font-sans antialiased">
+      <SEOHead
+        title="DibsMatch | Claim your next role — AI Job Matching SaaS & ATS Platform"
+        description="Claim your next role with DibsMatch. Launch your own branded AI recruitment marketplace and ATS platform. Turnkey white-label SaaS with vector matching, dual candidate & recruiter portals, Kanban tracking, and Stripe monetization."
+        keywords="DibsMatch, claim your next role, white-label job board, AI recruitment SaaS, applicant tracking system, job matching platform, multi-tenant ATS, recruitment agency software, AI skill matching, white label recruitment software"
+        canonicalUrl="https://dibsmatch.io/"
+      />
       {/* Top Notification Bar */}
       <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-purple-900 text-white text-xs py-2 px-4 border-b border-blue-800/40">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="bg-yellow-400 text-slate-950 font-bold px-2 py-0.5 rounded text-[10px] tracking-wide uppercase">New Release</span>
             <span className="font-medium text-slate-200">
-              TalentMatch SaaS Edition: Multi-tenant White-Label Licensing Now Available for Q3 2026.
+              DibsMatch SaaS Edition: Multi-workspace White-Label Licensing Now Available for Q3 2026.
             </span>
           </div>
           <div className="hidden sm:flex items-center gap-4 text-xs font-semibold">
@@ -221,16 +228,16 @@ export default function SaaSLicenseLandingPage() {
             {/* Logo */}
             <div className="flex items-center gap-3 flex-shrink-0">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-500 via-indigo-500 to-teal-400 rounded-xl flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-blue-500/20">
-                TM
+                DM
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xl font-extrabold tracking-tight text-white">TalentMatch</span>
+                  <span className="text-xl font-extrabold tracking-tight text-white">DibsMatch</span>
                   <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
                     SaaS Platform
                   </span>
                 </div>
-                <span className="text-[11px] text-slate-400 block -mt-0.5">White-Label Job Matching Solution</span>
+                <span className="text-[11px] text-slate-400 block -mt-0.5">Claim your next role</span>
               </div>
             </div>
 
@@ -270,10 +277,10 @@ export default function SaaSLicenseLandingPage() {
               </Button>
 
               <Button
-                onClick={() => handleOpenModal('growth')}
+                onClick={() => handleOpenModal('pro')}
                 className="bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/25 px-4 sm:px-5"
               >
-                <span>Get Tenant License</span>
+                <span>Get Workspace License</span>
                 <ArrowRight className="w-4 h-4 ml-1 hidden sm:inline" />
               </Button>
 
@@ -349,7 +356,7 @@ export default function SaaSLicenseLandingPage() {
             {/* Top Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-slate-300 text-xs font-semibold shadow-inner">
               <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
-              <span>Turnkey Multi-Tenant Job Marketplace & ATS Platform</span>
+              <span>Turnkey B2B Job Marketplace & ATS Solution</span>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             </div>
 
@@ -364,7 +371,7 @@ export default function SaaSLicenseLandingPage() {
 
             {/* Subtitle */}
             <p className="text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-              A comprehensive, production-ready white-label hiring platform. Complete with AI skill matching, dual candidate & recruiter portals, Kanban applicant tracking, and automated monetization.
+              A comprehensive, production-ready white-label hiring platform. Complete with AI skill matching, dual candidate & recruiter portals, Kanban applicant tracking, and automated monetization for your organization.
             </p>
 
             {/* Hero CTAs */}
@@ -384,11 +391,11 @@ export default function SaaSLicenseLandingPage() {
               <Button
                 size="lg"
                 variant="outline"
-                onClick={() => handleOpenModal('growth')}
+                onClick={() => handleOpenModal('pro')}
                 className="w-full sm:w-auto border-slate-700 bg-slate-900/90 hover:bg-slate-800 text-white font-bold text-base px-8 py-6 rounded-xl transition-all hover:scale-[1.02]"
               >
                 <DollarSign className="w-5 h-5 text-emerald-400" />
-                Purchase Tenant License
+                Get Workspace License
               </Button>
             </div>
 
@@ -468,7 +475,7 @@ export default function SaaSLicenseLandingPage() {
                     <div className="w-7 h-7 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xs">
                       TM
                     </div>
-                    <span className="font-bold text-white text-sm">Tenant Portal</span>
+                    <span className="font-bold text-white text-sm">Workspace Portal</span>
                   </div>
                   <div className="space-y-1 text-xs">
                     <div className="flex items-center gap-2 px-2.5 py-2 rounded-lg bg-blue-600/20 text-blue-400 font-semibold">
@@ -485,7 +492,7 @@ export default function SaaSLicenseLandingPage() {
                     </div>
                     <div className="flex items-center gap-2 px-2.5 py-2 rounded-lg text-slate-400 hover:text-slate-200">
                       <DollarSign className="w-4 h-4" />
-                      <span>Tenant Billing</span>
+                      <span>Organization Billing</span>
                     </div>
                   </div>
                 </div>
@@ -591,7 +598,7 @@ export default function SaaSLicenseLandingPage() {
               100% White-Label Freedom
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
-              Try the Interactive Tenant Rebranding Simulator
+              Try the Interactive Workspace Rebranding Simulator
             </h2>
             <p className="text-slate-400 mt-2 text-sm sm:text-base">
               See how your company name, custom domain, and theme colors instantly transform the entire platform.
@@ -603,16 +610,16 @@ export default function SaaSLicenseLandingPage() {
             <div className="lg:col-span-5 bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-6">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 <Palette className="w-5 h-5 text-blue-400" />
-                Tenant Brand Configuration
+                Workspace Brand Configuration
               </h3>
 
               {/* Brand Name */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300 block">Brand / Agency Name</label>
+                <label className="text-xs font-semibold text-slate-300 block">Workspace / Organization Name</label>
                 <input
                   type="text"
-                  value={tenantName}
-                  onChange={(e) => setTenantName(e.target.value)}
+                  value={brandName}
+                  onChange={(e) => setBrandName(e.target.value)}
                   className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
                   placeholder="e.g. Apex Talent Hub"
                 />
@@ -620,13 +627,13 @@ export default function SaaSLicenseLandingPage() {
 
               {/* Custom Domain */}
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300 block">Custom Tenant Domain</label>
+                <label className="text-xs font-semibold text-slate-300 block">Custom Workspace Domain</label>
                 <div className="relative">
                   <Globe className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
-                    value={tenantDomain}
-                    onChange={(e) => setTenantDomain(e.target.value)}
+                    value={brandDomain}
+                    onChange={(e) => setBrandDomain(e.target.value)}
                     className="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
                     placeholder="e.g. jobs.mybrand.com"
                   />
@@ -663,7 +670,7 @@ export default function SaaSLicenseLandingPage() {
               </div>
 
               <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-                <span>Multi-tenant Isolation:</span>
+                <span>Workspace Data Isolation:</span>
                 <span className="text-emerald-400 font-semibold">Enabled (Private DB Schema)</span>
               </div>
             </div>
@@ -672,7 +679,7 @@ export default function SaaSLicenseLandingPage() {
             <div className="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
               <div className="text-xs font-mono text-slate-500 mb-4 flex items-center justify-between">
                 <span>PREVIEW: Live Client-Facing Portal</span>
-                <span className="text-blue-400">Custom Domain: https://{tenantDomain || 'careers.yourbrand.io'}</span>
+                <span className="text-blue-400">Custom Domain: https://{brandDomain || 'careers.yourbrand.io'}</span>
               </div>
 
               {/* Rebranded Mock Header */}
@@ -681,13 +688,13 @@ export default function SaaSLicenseLandingPage() {
                   <div
                     className={`w-9 h-9 rounded-xl bg-gradient-to-br ${colorThemes[themeColor].gradient} flex items-center justify-center text-white font-black text-sm shadow-md`}
                   >
-                    {(tenantName || 'TM').substring(0, 2).toUpperCase()}
+                    {(brandName || 'DM').substring(0, 2).toUpperCase()}
                   </div>
                   <div>
                     <div className="font-bold text-white text-base leading-tight">
-                      {tenantName || 'Your Brand Name'}
+                      {brandName || 'Your Brand Name'}
                     </div>
-                    <div className="text-[10px] text-slate-400">Powered by TalentMatch Engine</div>
+                    <div className="text-[10px] text-slate-400">Powered by DibsMatch Engine</div>
                   </div>
                 </div>
 
@@ -1005,47 +1012,43 @@ export default function SaaSLicenseLandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-            {/* Starter / Agency Plan */}
-            <div className="bg-slate-950 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-slate-700 transition-all">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
+            {/* Starter Plan */}
+            <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
               <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold text-white">Agency Edition</h3>
-                  <Badge className="bg-slate-800 text-slate-300">Single Tenant</Badge>
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="text-lg font-bold text-white">Starter</h3>
+                  <Badge className="bg-slate-800 text-slate-300 text-[11px]">1 Workspace</Badge>
                 </div>
-                <p className="text-xs text-slate-400 mb-6">
-                  Engineered for boutique staffing agencies & executive search firms requiring a dedicated branded portal.
+                <p className="text-xs text-slate-400 mb-5 leading-relaxed">
+                  For boutique staffing agencies & emerging recruitment teams launching a dedicated branded portal.
                 </p>
 
-                <div className="mb-6">
-                  <div className="text-4xl font-black text-white">$399</div>
-                  <div className="text-xs text-slate-400 mt-1">per month ($319/mo billed annually or $3,990 buyout)</div>
+                <div className="mb-5">
+                  <div className="text-3xl font-black text-white">$299</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5">$249/mo billed annually ($2,990 buyout)</div>
                 </div>
 
-                <ul className="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800 pt-6">
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>1 Dedicated Branded Tenant & Custom Subdomain</span>
+                <ul className="space-y-2.5 text-xs text-slate-300 mb-6 border-t border-slate-800 pt-5">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>1 Dedicated Branded Workspace</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Up to 10 Recruiter Seats with Role-Based Access</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Up to 5 Team Member Seats</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Applicant Tracking (Kanban Pipeline & Scorecards)</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Kanban ATS Pipeline & Scorecards</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>AI Semantic Matching (2,500 candidate matches/mo)</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>1,500 AI Matches / month</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Automated Resume/CV Parsing (500 uploads/mo)</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Standard Email Notification Templates & SLA</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>300 CV Parses / month</span>
                   </li>
                 </ul>
               </div>
@@ -1053,112 +1056,157 @@ export default function SaaSLicenseLandingPage() {
               <Button
                 variant="outline"
                 onClick={() => handleOpenModal('starter')}
-                className="w-full border-slate-700 bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-xl"
+                className="w-full border-slate-700 bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl text-xs"
               >
-                Select Agency Tier
+                Select Starter
               </Button>
             </div>
 
-            {/* Growth Marketplace SaaS Plan (Featured) */}
-            <div className="bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border-2 border-blue-500 rounded-3xl p-8 flex flex-col justify-between shadow-2xl shadow-blue-500/15 relative">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-xs font-extrabold px-4 py-1 rounded-full uppercase tracking-wider shadow-md">
-                Most Popular for SaaS Founders
-              </div>
-
+            {/* Growth Plan */}
+            <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
               <div>
-                <div className="flex justify-between items-center mb-4 pt-2">
-                  <h3 className="text-xl font-bold text-white">Marketplace SaaS Edition</h3>
-                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/40">Multi-Tenant</Badge>
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="text-lg font-bold text-white">Growth</h3>
+                  <Badge className="bg-slate-800 text-slate-300 text-[11px]">3 Workspaces</Badge>
                 </div>
-                <p className="text-xs text-slate-400 mb-6">
-                  Ideal for regional job board founders, multi-brand staffing groups, and high-volume talent marketplaces.
+                <p className="text-xs text-slate-400 mb-5 leading-relaxed">
+                  For scaling recruitment firms & niche job boards expanding candidate volume across teams.
                 </p>
 
-                <div className="mb-6">
-                  <div className="text-4xl font-black text-white">$990</div>
-                  <div className="text-xs text-slate-400 mt-1">per month ($790/mo billed annually or $9,900 buyout)</div>
+                <div className="mb-5">
+                  <div className="text-3xl font-black text-white">$699</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5">$579/mo billed annually ($6,990 buyout)</div>
                 </div>
 
-                <ul className="space-y-3 text-xs text-slate-200 mb-8 border-t border-slate-800 pt-6">
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span className="font-semibold text-white">Up to 5 Multi-Brand Isolated Tenant Workspaces</span>
+                <ul className="space-y-2.5 text-xs text-slate-300 mb-6 border-t border-slate-800 pt-5">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Up to 3 Branded Workspaces</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Unlimited Candidate & Recruiter Accounts</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Up to 15 Team Member Seats</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Custom Apex Domain Mapping with Automated SSL</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Custom Apex Domain Mapping & SSL</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Stripe Connect Employer Paywall & Job Posting Credits</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Employer Paywalls & Stripe Billing</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>High-Throughput Vector AI Matching (Unlimited)</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>10,000 AI Matches / month</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Multi-Currency (USD, AED, SAR, EUR) & MENA RTL Ready</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Priority 24/7 SLA & Dedicated Customer Success Manager</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>1,500 CV Parses / month</span>
                   </li>
                 </ul>
               </div>
 
               <Button
+                variant="outline"
                 onClick={() => handleOpenModal('growth')}
-                className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white font-bold py-6 rounded-xl shadow-lg shadow-blue-600/30 text-sm"
+                className="w-full border-slate-700 bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl text-xs"
               >
-                Deploy Marketplace SaaS Tenant &rarr;
+                Select Growth
+              </Button>
+            </div>
+
+            {/* Pro Plan (Featured) */}
+            <div className="bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 border-2 border-blue-500 rounded-3xl p-6 flex flex-col justify-between shadow-2xl shadow-blue-500/15 relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] font-extrabold px-3 py-0.5 rounded-full uppercase tracking-wider shadow-md">
+                Most Popular
+              </div>
+
+              <div>
+                <div className="flex justify-between items-center mb-3 pt-1">
+                  <h3 className="text-lg font-bold text-white">Pro</h3>
+                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/40 text-[11px]">10 Workspaces</Badge>
+                </div>
+                <p className="text-xs text-slate-400 mb-5 leading-relaxed">
+                  For high-volume talent marketplaces, regional job networks, and multi-brand staffing groups.
+                </p>
+
+                <div className="mb-5">
+                  <div className="text-3xl font-black text-white">$1,290</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5">$1,090/mo billed annually ($12,900 buyout)</div>
+                </div>
+
+                <ul className="space-y-2.5 text-xs text-slate-200 mb-6 border-t border-slate-800 pt-5">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span className="font-semibold text-white">Up to 10 Isolated Workspaces</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Unlimited Members & Candidates</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>High-Throughput Vector AI Matching</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Unlimited Automated CV Parsing</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Multi-Currency & MENA RTL Ready</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Priority 24/7 Dedicated SLA</span>
+                  </li>
+                </ul>
+              </div>
+
+              <Button
+                onClick={() => handleOpenModal('pro')}
+                className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white font-bold py-5 rounded-xl shadow-lg shadow-blue-600/30 text-xs"
+              >
+                Deploy Pro Workspace &rarr;
               </Button>
             </div>
 
             {/* Enterprise / Source Code Plan */}
-            <div className="bg-slate-950 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between hover:border-slate-700 transition-all">
+            <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
               <div>
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-bold text-white">Source Code License</h3>
-                  <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/40">Full Codebase</Badge>
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="text-lg font-bold text-white">Enterprise</h3>
+                  <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/40 text-[11px]">Full Codebase</Badge>
                 </div>
-                <p className="text-xs text-slate-400 mb-6">
-                  Complete uncompiled codebase ownership, private cloud self-hosting, and unrestricted custom engineering.
+                <p className="text-xs text-slate-400 mb-5 leading-relaxed">
+                  Complete uncompiled codebase ownership, private cloud self-hosting, and custom engineering.
                 </p>
 
-                <div className="mb-6">
-                  <div className="text-4xl font-black text-white">$24,900</div>
-                  <div className="text-xs text-slate-400 mt-1">One-time perpetual buyout (0% royalties)</div>
+                <div className="mb-5">
+                  <div className="text-3xl font-black text-white">$24,900</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5">One-time perpetual buyout (0% royalties)</div>
                 </div>
 
-                <ul className="space-y-3 text-xs text-slate-300 mb-8 border-t border-slate-800 pt-6">
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span className="font-semibold text-white">100% Full Uncompiled Source Code (Frontend & Backend)</span>
+                <ul className="space-y-2.5 text-xs text-slate-300 mb-6 border-t border-slate-800 pt-5">
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span className="font-semibold text-white">100% Full Uncompiled Source Code</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Unlimited Self-Hosted Tenants & Private VPC Deployment</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Unlimited Self-Hosted Workspaces (VPC)</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Self-Hosted AI Embedding Models (Data Sovereignty Compliant)</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Self-Hosted AI Embedding Models</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Enterprise Single Sign-On (SAML 2.0 / Okta / Azure AD)</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Enterprise SSO (SAML 2.0 / Okta / AD)</span>
                   </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>Direct Engineering Team Slack Channel & Architecture Review</span>
-                  </li>
-                  <li className="flex items-center gap-2.5">
-                    <Check className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                    <span>0% Platform Royalties & Perpetual Commercial Rights</span>
+                  <li className="flex items-center gap-2">
+                    <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                    <span>Direct Engineering Slack Channel</span>
                   </li>
                 </ul>
               </div>
@@ -1166,9 +1214,9 @@ export default function SaaSLicenseLandingPage() {
               <Button
                 variant="outline"
                 onClick={() => handleOpenModal('enterprise')}
-                className="w-full border-slate-700 bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-xl"
+                className="w-full border-slate-700 bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 rounded-xl text-xs"
               >
-                Request Source Code Agreement
+                Request Enterprise Code
               </Button>
             </div>
           </div>
@@ -1253,7 +1301,7 @@ export default function SaaSLicenseLandingPage() {
             Ready to Launch Your Job Matching Marketplace?
           </h2>
           <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto">
-            Test the live platform right now, or request your tenant deployment credentials to start onboarding candidates and recruiters today.
+            Test the live platform right now, or request your organization deployment credentials to start onboarding candidates and recruitment teams today.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
@@ -1270,11 +1318,11 @@ export default function SaaSLicenseLandingPage() {
 
             <Button
               size="lg"
-              onClick={() => handleOpenModal('growth')}
+              onClick={() => handleOpenModal('pro')}
               className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-6 rounded-xl text-base shadow-xl shadow-blue-600/30 gap-2"
             >
               <DollarSign className="w-5 h-5 text-emerald-400" />
-              Purchase Tenant License
+              Deploy Organization License
             </Button>
           </div>
         </div>
@@ -1285,14 +1333,17 @@ export default function SaaSLicenseLandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <div className="w-7 h-7 bg-gradient-to-br from-blue-500 to-teal-400 rounded-lg flex items-center justify-center text-slate-950 font-bold text-xs">
-                  TM
+                  DM
                 </div>
-                <span className="font-bold text-white text-sm">TalentMatch SaaS</span>
+                <div>
+                  <span className="font-bold text-white text-sm block leading-none">DibsMatch</span>
+                  <span className="text-[10px] text-slate-400 font-medium">Claim your next role</span>
+                </div>
               </div>
               <p className="text-slate-500 leading-relaxed">
-                Turnkey AI Job Matching & Multi-Tenant ATS SaaS Platform. Available under commercial white-label licensing.
+                Turnkey AI Job Matching & Multi-Workspace ATS SaaS Platform. Available under commercial white-label licensing.
               </p>
             </div>
 
@@ -1302,17 +1353,17 @@ export default function SaaSLicenseLandingPage() {
                 <li><Link to="/demo" className="hover:text-white">Demo Hub Directory</Link></li>
                 <li><Link to="/candidate/dashboard" className="hover:text-white">Candidate Portal Demo</Link></li>
                 <li><Link to="/recruiter/dashboard" className="hover:text-white">Recruiter ATS Demo</Link></li>
-                <li><Link to="/demo/client-portal" className="hover:text-white">Tenant End-User Landing</Link></li>
+                <li><Link to="/demo/client-portal" className="hover:text-white">Consumer Job Board Preview</Link></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="font-bold text-white mb-3">Licensing</h4>
+              <h4 className="font-bold text-white mb-3">Licensing Tiers</h4>
               <ul className="space-y-2">
-                <li><button onClick={() => handleOpenModal('starter')} className="hover:text-white text-left">Starter Agency Tier</button></li>
-                <li><button onClick={() => handleOpenModal('growth')} className="hover:text-white text-left">Growth SaaS Tier</button></li>
-                <li><button onClick={() => handleOpenModal('enterprise')} className="hover:text-white text-left">Source Code Agreement</button></li>
-                <li><a href="#roi-calculator" className="hover:text-white">Revenue Simulator</a></li>
+                <li><button onClick={() => handleOpenModal('starter')} className="hover:text-white text-left">Starter Tier ($299/mo)</button></li>
+                <li><button onClick={() => handleOpenModal('growth')} className="hover:text-white text-left">Growth Tier ($699/mo)</button></li>
+                <li><button onClick={() => handleOpenModal('pro')} className="hover:text-white text-left">Pro Tier ($1,290/mo)</button></li>
+                <li><button onClick={() => handleOpenModal('enterprise')} className="hover:text-white text-left">Enterprise Source Code</button></li>
               </ul>
             </div>
 
@@ -1320,7 +1371,7 @@ export default function SaaSLicenseLandingPage() {
               <h4 className="font-bold text-white mb-3">Security & Compliance</h4>
               <ul className="space-y-2 text-slate-500">
                 <li>GDPR & Data Protection Ready</li>
-                <li>Isolated Multi-Tenant Schema</li>
+                <li>Isolated Workspace Architecture</li>
                 <li>Encrypted Storage & Vectors</li>
                 <li>RTL / GCC Localization Ready</li>
               </ul>
@@ -1328,7 +1379,7 @@ export default function SaaSLicenseLandingPage() {
           </div>
 
           <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
-            <div>© 2026 TalentMatch SaaS Platform. All commercial rights reserved.</div>
+            <div>© 2026 DibsMatch SaaS Platform. All commercial rights reserved.</div>
             <div className="flex items-center gap-6">
               <Link to="/demo" className="hover:text-slate-300">Live Demo</Link>
               <a href="#whitelabel" className="hover:text-slate-300">White-Labeling</a>

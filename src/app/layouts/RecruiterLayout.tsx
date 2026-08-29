@@ -32,11 +32,16 @@ export default function RecruiterLayout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-8">
-              <Link to="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-teal-500 rounded-lg" />
-                <span className="text-xl font-semibold text-gray-900">TalentMatch</span>
+              <Link to="/" className="flex items-center gap-2.5 group">
+                <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-lg flex items-center justify-center text-white font-black text-xs shadow-md">
+                  DM
+                </div>
+                <div>
+                  <span className="text-xl font-bold tracking-tight text-gray-900 block leading-none">DibsMatch</span>
+                  <span className="text-[10px] text-gray-500 font-medium tracking-tight">Claim your next role</span>
+                </div>
               </Link>
-              <Badge variant="secondary" className="hidden sm:flex">Recruiter</Badge>
+              <Badge variant="secondary" className="hidden sm:flex">Recruiter ATS</Badge>
             </div>
 
             <div className="flex items-center gap-4">

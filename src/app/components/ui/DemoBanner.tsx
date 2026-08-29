@@ -32,7 +32,7 @@ export function DemoBanner() {
             Interactive SaaS Demo
           </Badge>
           <span className="text-slate-300 hidden md:inline">
-            You are testing the live tenant portal for <span className="font-semibold text-white">TalentMatch Platform</span>.
+            You are testing the live workspace for <span className="font-semibold text-white">DibsMatch Platform</span>.
           </span>
         </div>
 
