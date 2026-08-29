@@ -23,18 +23,25 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { useCandidate } from '../../api/hooks';
+import { mockCandidates } from '../../data/mockData';
 import { toast } from 'sonner';
 
 export default function CandidateProfileView() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Find candidate by ID
-  const { data: candidate, isLoading } = useCandidate(id || '');
+  // Find candidate by ID with fallback
+  const { data: candidateData, isLoading } = useCandidate(id || '1');
+  const candidate = candidateData || mockCandidates.find((c) => c.id === id || c.userId === id) || mockCandidates[0];
   const matchScore = 95; // Mock match score
 
-  if (isLoading || !candidate) {
-    return <div className="p-8 text-center text-gray-500">Loading profile...</div>;
+  if (isLoading && !candidate) {
+    return (
+      <div className="p-12 text-center flex flex-col items-center justify-center space-y-3">
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        <div className="text-gray-500 font-medium text-sm">Loading Candidate Profile...</div>
+      </div>
+    );
   }
 
   const handleShortlist = () => {

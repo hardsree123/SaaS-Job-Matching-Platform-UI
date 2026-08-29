@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router';
 
-// Landing
+// Landing & Commercial Pages
+import SaaSLicenseLandingPage from './pages/SaaSLicenseLandingPage';
+import DemoHubPage from './pages/DemoHubPage';
 import LandingPage from './pages/LandingPage';
 
 // Candidate Pages
@@ -25,6 +27,14 @@ import RecruiterLayout from './layouts/RecruiterLayout';
 export const router = createBrowserRouter([
   {
     path: '/',
+    Component: SaaSLicenseLandingPage,
+  },
+  {
+    path: '/demo',
+    Component: DemoHubPage,
+  },
+  {
+    path: '/demo/client-portal',
     Component: LandingPage,
   },
   {

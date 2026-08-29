@@ -15,13 +15,22 @@ import {
 } from 'lucide-react';
 import { useCandidate } from '../../api/hooks';
 import { useAuthStore } from '../../store/useAuthStore';
+import { mockCandidates } from '../../data/mockData';
 
 export default function CandidateProfile() {
   const { user } = useAuthStore();
-  const { data: candidate, isLoading } = useCandidate(user?.id || '1');
+  const { data: candidateData, isLoading } = useCandidate(user?.id || '1');
+  
+  // Use resolved candidate or fallback to default mock candidate for seamless demo flow
+  const candidate = candidateData || mockCandidates.find((c) => c.userId === user?.id || c.id === user?.id) || mockCandidates[0];
 
-  if (isLoading || !candidate) {
-    return <div className="p-8 text-center text-gray-500">Loading profile...</div>;
+  if (isLoading && !candidate) {
+    return (
+      <div className="p-12 text-center flex flex-col items-center justify-center space-y-3">
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        <div className="text-gray-500 font-medium text-sm">Loading Candidate Profile...</div>
+      </div>
+    );
   }
 
   return (

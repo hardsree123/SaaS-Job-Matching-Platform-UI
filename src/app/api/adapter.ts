@@ -38,10 +38,10 @@ export const api = {
 
     getJobById: async (id: string): Promise<Job> => {
         if (IS_MOCK) {
-            await delay(300);
-            const job = mockJobs.find((j) => j.id === id);
-            if (!job) throw new Error('Job not found');
-            return job;
+            await delay(200);
+            const normalizedId = id.replace(/^job-/, '');
+            const job = mockJobs.find((j) => j.id === id || j.id === normalizedId);
+            return job || mockJobs[0];
         }
         const response = await fetch(`${API_BASE_URL}/jobs/${id}`);
         if (!response.ok) throw new Error('Failed to fetch job');
@@ -51,7 +51,7 @@ export const api = {
     // Candidates
     getCandidates: async (): Promise<Candidate[]> => {
         if (IS_MOCK) {
-            await delay(800);
+            await delay(300);
             return mockCandidates;
         }
         const response = await fetch(`${API_BASE_URL}/candidates`);
@@ -61,10 +61,12 @@ export const api = {
 
     getCandidateById: async (id: string): Promise<Candidate> => {
         if (IS_MOCK) {
-            await delay(300);
-            const candidate = mockCandidates.find((c) => c.id === id);
-            if (!candidate) throw new Error('Candidate not found');
-            return candidate;
+            await delay(200);
+            const normalizedId = id.replace(/^cand-/, '');
+            const candidate = mockCandidates.find(
+                (c) => c.id === id || c.userId === id || c.id === normalizedId || c.userId === `user-${normalizedId}`
+            );
+            return candidate || mockCandidates[0];
         }
         const response = await fetch(`${API_BASE_URL}/candidates/${id}`);
         if (!response.ok) throw new Error('Failed to fetch candidate');
