@@ -32,3 +32,4 @@ lerna-debug.log*
 .idea/
 .vscode/*
 !.vscode/extensions.json
+dist/index.html
