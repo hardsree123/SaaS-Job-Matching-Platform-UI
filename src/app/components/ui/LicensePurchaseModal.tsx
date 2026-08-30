@@ -24,7 +24,12 @@ import {
   CheckCircle2,
   Cpu,
   Layers,
+  MessageCircle,
+  Copy,
+  ExternalLink,
+  Loader2,
 } from 'lucide-react';
+import { sendLeadToWhatsApp } from '../../services/leadService';
 
 export type PlanKey = 'starter' | 'growth' | 'pro' | 'enterprise';
 
@@ -41,6 +46,7 @@ export function LicensePurchaseModal({
 }: LicensePurchaseModalProps) {
   const [selectedPlan, setSelectedPlan] = useState<PlanKey>(initialPlan);
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual' | 'lifetime'>('annual');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -50,6 +56,8 @@ export function LicensePurchaseModal({
     targetDomain: '',
     notes: '',
   });
+
+  const targetWhatsAppNumber = '+91 7907084428';
 
   const plans: Record<PlanKey, {
     name: string;
@@ -176,20 +184,47 @@ export function LicensePurchaseModal({
     };
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+
+    const activePricing = getActivePrice(selectedPlan);
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    });
+
+    try {
+      await sendLeadToWhatsApp({
+        planName: currentPlan.name,
+        planKey: selectedPlan,
+        billingCycle,
+        priceAmount: activePricing.amount,
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        targetDomain: formData.targetDomain,
+        recipientWhatsApp: targetWhatsAppNumber,
+        submittedAt: timestamp,
+      });
+    } catch (err) {
+      console.error('Lead forwarding error:', err);
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   const handleResetAndClose = () => {
     setSubmitted(false);
+    setIsSubmitting(false);
     onClose();
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleResetAndClose()}>
       <DialogContent className="sm:max-w-5xl lg:max-w-5xl xl:max-w-6xl w-full max-w-[96vw] max-h-[92vh] overflow-y-auto p-0 border-slate-800 bg-slate-950 text-white shadow-2xl rounded-2xl">
-        {/* Top Header Banner */}
         <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 px-6 sm:px-10 py-6 border-b border-slate-800 relative">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="space-y-1">
@@ -225,26 +260,32 @@ export function LicensePurchaseModal({
         </div>
 
         {submitted ? (
-          /* Submission Feedback Screen */
+          /* Silent Background Forwarding Confirmation Screen */
           <div className="p-8 sm:p-12 text-center space-y-6 max-w-xl mx-auto">
             <div className="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto ring-8 ring-emerald-500/10">
               <Check className="w-10 h-10 stroke-[3]" />
             </div>
+            
             <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+                <Zap className="w-3.5 h-3.5" />
+                Lead Dossier Dispatched
+              </div>
               <h3 className="text-2xl sm:text-3xl font-black text-white">Call Back Request Received!</h3>
               <p className="text-slate-300 text-sm leading-relaxed">
-                Thank you, <span className="font-bold text-white">{formData.name || 'Partner'}</span>. Our commercial solutions architect is reviewing your organization profile for <span className="font-bold text-white">{formData.company || 'your team'}</span> and will call you back shortly.
+                Thank you, <span className="font-bold text-white">{formData.name || 'Partner'}</span>. Your organization requirements for <span className="font-bold text-white">{formData.company || 'your team'}</span> have been dispatched to our commercial solutions team.
               </p>
             </div>
 
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 text-left text-xs space-y-3">
+            {/* Lead Summary Breakdown */}
+            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 text-left text-xs space-y-3 shadow-inner">
               <div className="flex justify-between items-center text-slate-400">
                 <span>Selected Plan:</span>
                 <span className="font-bold text-white text-sm">{currentPlan.name} Edition</span>
               </div>
               <div className="flex justify-between items-center text-slate-400">
-                <span>Billing Structure:</span>
-                <span className="font-semibold text-emerald-400 capitalize">{billingCycle} Term</span>
+                <span>Investment & Term:</span>
+                <span className="font-semibold text-emerald-400">{getActivePrice(selectedPlan).amount} ({billingCycle})</span>
               </div>
               {formData.phone && (
                 <div className="flex justify-between items-center text-slate-400">
@@ -253,23 +294,27 @@ export function LicensePurchaseModal({
                 </div>
               )}
               <div className="flex justify-between items-center text-slate-400">
-                <span>Custom Domain:</span>
-                <span className="font-semibold text-blue-400 font-mono">{formData.targetDomain || 'Custom Subdomain'}</span>
+                <span>Organization:</span>
+                <span className="font-semibold text-slate-200">{formData.company}</span>
+              </div>
+              <div className="flex justify-between items-center text-slate-400">
+                <span>Response SLA:</span>
+                <span className="font-bold text-emerald-400">Under 15 Minutes</span>
               </div>
             </div>
 
             <p className="text-xs text-slate-400">
-              We have also sent the complete white-label technical architecture brief to <span className="font-medium text-slate-200">{formData.email}</span>.
+              Our solutions architect is preparing your sandbox environment and will call you back shortly.
             </p>
 
-            <Button onClick={handleResetAndClose} className="w-full sm:w-auto px-8 py-5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30">
-              Return to Platform Explorer
-            </Button>
+            <div className="pt-2">
+              <Button onClick={handleResetAndClose} className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30">
+                Done & Return to Explorer
+              </Button>
+            </div>
           </div>
         ) : (
-          /* Main 2-Column Split Interface */
           <div className="p-6 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
             {/* Left Column: Plan Picker & Dynamic Feature Inclusions (7 Cols) */}
             <div className="lg:col-span-7 space-y-6">
               {/* Step 1: Billing Structure Switcher */}
@@ -546,11 +591,21 @@ export function LicensePurchaseModal({
                 <div className="pt-2">
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white font-bold py-6 rounded-xl shadow-xl shadow-blue-600/30 text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.01]"
+                    disabled={isSubmitting}
+                    className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white font-bold py-6 rounded-xl shadow-xl shadow-blue-600/30 text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.01] disabled:opacity-75"
                   >
-                    <PhoneCall className="w-4 h-4" />
-                    <span>Request a call back</span>
-                    <ArrowRight className="w-4 h-4 ml-1" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Transmitting Dossier to WhatsApp...</span>
+                      </>
+                    ) : (
+                      <>
+                        <PhoneCall className="w-4 h-4" />
+                        <span>Request a call back</span>
+                        <ArrowRight className="w-4 h-4 ml-1" />
+                      </>
+                    )}
                   </Button>
                 </div>
 
