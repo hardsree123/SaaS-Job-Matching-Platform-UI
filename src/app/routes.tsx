@@ -21,43 +21,51 @@ import CandidateProfileView from './pages/recruiter/CandidateProfileView';
 import HiringPipeline from './pages/recruiter/HiringPipeline';
 
 // Layouts
+import RootLayout from './layouts/RootLayout';
 import CandidateLayout from './layouts/CandidateLayout';
 import RecruiterLayout from './layouts/RecruiterLayout';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    Component: SaaSLicenseLandingPage,
-  },
-  {
-    path: '/demo',
-    Component: DemoHubPage,
-  },
-  {
-    path: '/demo/client-portal',
-    Component: LandingPage,
-  },
-  {
-    path: '/candidate',
-    Component: CandidateLayout,
+    Component: RootLayout,
     children: [
-      { path: 'onboarding', Component: CandidateOnboarding },
-      { path: 'dashboard', Component: CandidateDashboard },
-      { path: 'jobs', Component: JobDiscovery },
-      { path: 'interest', Component: RecruiterInterest },
-      { path: 'applications', Component: ApplicationTracker },
-      { path: 'profile', Component: CandidateProfile },
-    ],
-  },
-  {
-    path: '/recruiter',
-    Component: RecruiterLayout,
-    children: [
-      { path: 'dashboard', Component: RecruiterDashboard },
-      { path: 'post-job', Component: PostJob },
-      { path: 'candidates', Component: CandidateSearch },
-      { path: 'candidates/:id', Component: CandidateProfileView },
-      { path: 'pipeline', Component: HiringPipeline },
+      {
+        index: true,
+        Component: SaaSLicenseLandingPage,
+      },
+      {
+        path: 'demo',
+        Component: DemoHubPage,
+      },
+      {
+        path: 'demo/client-portal',
+        Component: LandingPage,
+      },
+      {
+        path: 'candidate',
+        Component: CandidateLayout,
+        children: [
+          { path: 'onboarding', Component: CandidateOnboarding },
+          { path: 'dashboard', Component: CandidateDashboard },
+          { path: 'jobs', Component: JobDiscovery },
+          { path: 'interest', Component: RecruiterInterest },
+          { path: 'applications', Component: ApplicationTracker },
+          { path: 'profile', Component: CandidateProfile },
+        ],
+      },
+      {
+        path: 'recruiter',
+        Component: RecruiterLayout,
+        children: [
+          { path: 'dashboard', Component: RecruiterDashboard },
+          { path: 'post-job', Component: PostJob },
+          { path: 'candidates', Component: CandidateSearch },
+          { path: 'candidates/:id', Component: CandidateProfileView },
+          { path: 'pipeline', Component: HiringPipeline },
+        ],
+      },
     ],
   },
 ]);
+
