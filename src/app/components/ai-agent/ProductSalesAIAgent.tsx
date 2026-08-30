@@ -455,7 +455,7 @@ export function ProductSalesAIAgent({
       </div>
 
       {/* Message Stream Area */}
-      <div className="flex-1 p-3 sm:p-4 overflow-y-auto space-y-4 font-sans selection:bg-blue-600 selection:text-white">
+      <div className="flex-1 p-3 sm:p-4 overflow-y-auto ai-chat-scrollbar space-y-4 font-sans selection:bg-blue-600 selection:text-white">
         {messages.map((msg) => {
           const isAgent = msg.sender === 'agent';
           return (
